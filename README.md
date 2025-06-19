@@ -21,7 +21,7 @@ Optional tools like Kafka Connect and Kafdrop are also included.
 
 ```
 
-\[Simulator (Go/Python)]
+\[Simulator (Go)]
 ↓
 \[Kafka Topic: clicks]
 ↓
@@ -37,7 +37,7 @@ Optional tools like Kafka Connect and Kafdrop are also included.
 
 ## 🚀 Features
 
-- ✅ Real-time event simulation (Go or Python)
+- ✅ Real-time event simulation (Go)
 - ✅ Kafka producer/consumer pipeline
 - ✅ Stream processing with PySpark
 - ✅ Sink to PostgreSQL and Elasticsearch
@@ -64,10 +64,10 @@ Optional tools like Kafka Connect and Kafdrop are also included.
 
 ```
 
-ksr/
+kafka-spark-realtime/
 ├── docker-compose.yml
 ├── simulator/
-│   └── main.go or send\_clicks.py
+│   └── main.go
 ├── spark/
 │   └── stream\_processor.py
 ├── sql/
@@ -87,8 +87,8 @@ ksr/
 
 1. **Clone the repo**
 ```bash
-git clone https://github.com//ksr.git
-cd eventpulse
+git clone [https://github.com//kafka-spark-realtime.git](https://github.com/Yurhigz/kafka-spark-realtime.git)
+cd kafka-spark-realtime
 ````
 
 2. **Launch the environment**
@@ -101,8 +101,7 @@ docker-compose up -d
 
 ```bash
 go run simulator/main.go
-# or
-python simulator/send_clicks.py
+
 ```
 
 4. **Launch the Spark job**
