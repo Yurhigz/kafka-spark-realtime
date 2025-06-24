@@ -97,6 +97,16 @@ cd kafka-spark-realtime
 docker-compose up -d
 ```
 
+2.bis **Setup C Bindings**
+
+Installer le compilateur GCC : 
+```bash
+sudo apt-get update
+sudo apt-get install build-essential
+```
+
+Modifier la variable CGO_ENABLED
+
 3. **Start the simulator**
 
 ```bash
