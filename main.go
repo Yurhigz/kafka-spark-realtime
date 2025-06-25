@@ -135,10 +135,10 @@ func main() {
 	//
 	p, err := kafka.NewProducer(&kafka.ConfigMap{
 		"bootstrap.servers":          "0.0.0.0:9092",
-		"linger.ms":                  5,       // Attend jusqu’à 5ms pour batcher les messages (ajuste à ta charge)
+		"linger.ms":                  5,       // Attend jusqu’à 5ms pour batcher les messages
 		"batch.num.messages":         10000,   // Nombre max de messages dans un batch
-		"queue.buffering.max.kbytes": 1048576, // 1 Go de buffer max (ajuste selon ta RAM)
-		"compression.type":           "lz4",   // Compression rapide et efficace (peut aussi essayer snappy)
+		"queue.buffering.max.kbytes": 1048576, // 1 Go de buffer max
+		"compression.type":           "lz4",   // Compression rapide et efficace
 		"acks":                       "1",
 		"statistics.interval.ms":     5000, // Envoie des stats toutes les 5 secondes
 	})
@@ -154,14 +154,14 @@ func main() {
 			case *kafka.Message:
 				if ev.TopicPartition.Error != nil {
 					fmt.Printf("Failed to deliver message: %v\n", ev.TopicPartition)
-				} else if ev.Headers != nil {
-					fmt.Printf("Message delivered: %s\n", ev.Value)
-					// fmt.Printf("Produced event to topic %s: key = %-10s value = %s\n",
-					// 	*ev.TopicPartition.Topic, string(ev.Key), string(ev.Value))
-				} else if string(ev.Value) != "" && json.Valid(ev.Value) {
-					// Ça pourrait être les stats JSON
-					fmt.Printf("Stats JSON: %s\n", ev.Value)
-				}
+				} //else if ev.Headers != nil {
+				// 	fmt.Printf("Message delivered: %s\n", ev.Value)
+				// 	// fmt.Printf("Produced event to topic %s: key = %-10s value = %s\n",
+				// 	// 	*ev.TopicPartition.Topic, string(ev.Key), string(ev.Value))
+				// } else if string(ev.Value) != "" && json.Valid(ev.Value) {
+				// 	// Ça pourrait être les stats JSON
+				// 	fmt.Printf("Stats JSON: %s\n", ev.Value)
+				// }
 			}
 		}
 	}()
@@ -169,6 +169,13 @@ func main() {
 	topic := "logs"
 	numWorkers := 25 // nombre de goroutines producteurs
 	messagesPerWorker := 100000
+
+	// 	Le WaitGroup (wg) permet à ton programme principal d’attendre que toutes les
+	// goroutines aient terminé avant de continuer (ici, avant de fermer le producteur Kafka).
+
+	// Tu déclares combien de tâches tu attends avec wg.Add(n).
+	// Chaque tâche (goroutine) appelle defer wg.Done() pour signaler sa fin.
+	// Le main thread attend la fin de toutes les tâches avec wg.Wait().
 
 	var wg sync.WaitGroup
 	wg.Add(numWorkers)
