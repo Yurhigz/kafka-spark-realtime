@@ -170,13 +170,6 @@ func main() {
 	numWorkers := 25 // nombre de goroutines producteurs
 	messagesPerWorker := 100000
 
-	// 	Le WaitGroup (wg) permet à ton programme principal d’attendre que toutes les
-	// goroutines aient terminé avant de continuer (ici, avant de fermer le producteur Kafka).
-
-	// Tu déclares combien de tâches tu attends avec wg.Add(n).
-	// Chaque tâche (goroutine) appelle defer wg.Done() pour signaler sa fin.
-	// Le main thread attend la fin de toutes les tâches avec wg.Wait().
-
 	var wg sync.WaitGroup
 	wg.Add(numWorkers)
 
@@ -215,7 +208,7 @@ func main() {
 
 	wg.Wait()
 
-	p.Flush(15 * 1000) // Wait for messages to be delivered
+	p.Flush(15 * 1000) 
 	p.Close()
 
 }
